@@ -1,0 +1,70 @@
+name: Build sing-box SRS
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "Filters/AWAvenue-Ads-Rule-Singbox*.json"
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-srs
+  cancel-in-progress: false
+
+env:
+  SING_BOX_VERSION: "1.13.14"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Install sing-box
+        run: |
+          curl -fsSL -o /tmp/sing-box.tar.gz \
+            "https://github.com/SagerNet/sing-box/releases/download/v${SING_BOX_VERSION}/sing-box-${SING_BOX_VERSION}-linux-amd64.tar.gz"
+          tar -xzf /tmp/sing-box.tar.gz -C /tmp
+          sudo mv "/tmp/sing-box-${SING_BOX_VERSION}-linux-amd64/sing-box" /usr/local/bin/sing-box
+          sing-box version
+
+      - name: Compile rule-sets
+        run: |
+          shopt -s nullglob
+          sources=(Filters/AWAvenue-Ads-Rule-Singbox*.json)
+          if [ ${#sources[@]} -eq 0 ]; then
+            echo "No sing-box rule-set sources found" >&2
+            exit 1
+          fi
+          for src in "${sources[@]}"; do
+            out="${src%.json}.srs"
+            sing-box rule-set compile --output "$out" "$src"
+            echo "built $out ($(stat -c%s "$out") bytes)"
+          done
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Filters/AWAvenue-Ads-Rule-Singbox*.srs
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "chore: rebuild sing-box srs rule-sets"
+          for i in 1 2 3; do
+            if git push; then exit 0; fi
+            echo "push failed, retrying ($i/3)"
+            git pull --rebase origin main
+            sleep 5
+          done
+          exit 1

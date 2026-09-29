@@ -1,0 +1,90 @@
+name: Sync upstream AWAvenue
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+  repository_dispatch:
+    types: [upstream-pushed]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-upstream
+  cancel-in-progress: false
+
+env:
+  UPSTREAM_REPO: TG-Twilight/AWAvenue-Ads-Rule
+  UPSTREAM_BRANCH: main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.pull.outputs.changed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Read last synced upstream sha
+        id: last
+        run: |
+          if [ -f .upstream-version ]; then
+            echo "sha=$(cat .upstream-version)" >> "$GITHUB_OUTPUT"
+          else
+            echo "sha=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Get upstream head
+        id: head
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sha=$(gh api "repos/${UPSTREAM_REPO}/commits/${UPSTREAM_BRANCH}" --jq .sha)
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "upstream ${UPSTREAM_REPO}@${UPSTREAM_BRANCH} -> $sha"
+
+      - name: Pull upstream changes
+        id: pull
+        env:
+          UPSTREAM_SHA: ${{ steps.head.outputs.sha }}
+          LAST_SHA: ${{ steps.last.outputs.sha }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add upstream "https://github.com/${UPSTREAM_REPO}.git"
+          git fetch --no-tags upstream "$UPSTREAM_BRANCH"
+
+          if [ "$LAST_SHA" = "$UPSTREAM_SHA" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Already synced with $UPSTREAM_SHA"
+            exit 0
+          fi
+
+          if ! git merge --no-commit --no-ff "upstream/${UPSTREAM_BRANCH}"; then
+            echo "::error::Merge conflict with upstream ${UPSTREAM_SHA}, manual resolution required"
+            exit 1
+          fi
+
+          printf '%s\n' "$UPSTREAM_SHA" > .upstream-version
+          git add -A
+          git commit -m "chore: sync upstream ${UPSTREAM_REPO}@${UPSTREAM_SHA:0:7}"
+
+          for i in 1 2 3; do
+            if git push; then break; fi
+            echo "push failed, retrying ($i/3)"
+            git pull --rebase origin main
+            sleep 5
+          done
+          git log --oneline -3
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+  build-srs:
+    needs: sync
+    if: needs.sync.outputs.changed == 'true'
+    uses: ./.github/workflows/build-srs.yml
+    permissions:
+      contents: write
