@@ -76,10 +76,10 @@
 
 | 线路 | 链接 |
 |:----:|------|
-| GitHub Raw | [订阅地址](https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt) |
-| 天命 CFCDN | [订阅地址](https://github.boki.moe/https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt) |
-| jsDelivr (gcore) | [订阅地址](https://gcore.jsdelivr.net/gh/TG-Twilight/AWAvenue-Ads-Rule@main/AWAvenue-Ads-Rule.txt) |
-| ghproxy | [订阅地址](https://ghfast.top/https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt) |
+| GitHub Raw | [订阅地址](https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt) |
+| 天命 CFCDN | [订阅地址](https://github.boki.moe/https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt) |
+| jsDelivr (gcore) | [订阅地址](https://gcore.jsdelivr.net/gh/zuohl/AWAvenue-Ads-Rule@main/AWAvenue-Ads-Rule.txt) |
+| ghproxy | [订阅地址](https://ghfast.top/https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt) |
 
 其他格式与更多加速线路见 → [官方网站 · 订阅规则](https://awavenue.top/Sub.html)
 
@@ -89,14 +89,27 @@
 
 | 方案 | 包含内容 | 适合情况 | AdGuard 订阅 |
 |:----:|----------|----------|:------------:|
-| 完整防护 | 广告＋隐私＋不受欢迎 | 默认完整体验 | [订阅地址](https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt) |
-| 纯广告 | 仅广告 | 兼容与最小干预优先 | [订阅地址](https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Adguard-Only.Ads.txt) |
-| 广告＋不受欢迎 | 不包含隐私规则 | 希望保留统计与遥测 | [订阅地址](https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Adguard-No.Privacy.txt) |
-| 广告＋隐私 | 不包含不受欢迎规则 | 希望保留更新、推送和相关连接 | [订阅地址](https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Adguard-No.Unwelcome.txt) |
+| 完整防护 | 广告＋隐私＋不受欢迎 | 默认完整体验 | [订阅地址](https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt) |
+| 纯广告 | 仅广告 | 兼容与最小干预优先 | [订阅地址](https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Adguard-Only.Ads.txt) |
+| 广告＋不受欢迎 | 不包含隐私规则 | 希望保留统计与遥测 | [订阅地址](https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Adguard-No.Privacy.txt) |
+| 广告＋隐私 | 不包含不受欢迎规则 | 希望保留更新、推送和相关连接 | [订阅地址](https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Adguard-No.Unwelcome.txt) |
 
 其中「不受欢迎」指强制更新、P2P/PCDN、推送、云控下发一类——拦截它们不影响广告过滤效果，但可能影响对应功能，所以单独分了出来。
 
-上表只列了 AdGuard 格式；其余工具（Clash、Quantumult X、hosts、Mosdns 等）的四种变体同样存在于 [`Filters/`](https://github.com/TG-Twilight/AWAvenue-Ads-Rule/tree/main/Filters) 目录，文件名规律为 `AWAvenue-Ads-Rule-<工具>-<变体>.<后缀>`。推荐直接用 [官网订阅生成器](https://awavenue.top/Sub.html) 按需生成，不必记文件名。
+上表只列了 AdGuard 格式；其余工具（Clash、Quantumult X、hosts、Mosdns 等）的四种变体同样存在于 [`Filters/`](https://github.com/zuohl/AWAvenue-Ads-Rule/tree/main/Filters) 目录，文件名规律为 `AWAvenue-Ads-Rule-<工具>-<变体>.<后缀>`。推荐直接用 [官网订阅生成器](https://awavenue.top/Sub.html) 按需生成，不必记文件名。
+
+### sing-box SRS 订阅（二进制规则集）
+
+CI 会自动同步上游 `TG-Twilight/AWAvenue-Ads-Rule` 的最新规则，并把 `Filters/*Singbox*.json` 编译为二进制 `.srs`（体积更小、启动加载更快）：
+
+| 方案 | SRS 订阅 |
+|:----:|----------|
+| 完整防护 | https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox.srs |
+| 纯广告 | https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox-Only.Ads.srs |
+| 广告＋不受欢迎 | https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox-No.Privacy.srs |
+| 广告＋隐私 | https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox-No.Unwelcome.srs |
+
+配置示例（`route.rule_set`）、镜像地址与本地构建方式见 → [`docs/SingBox-SRS.md`](docs/SingBox-SRS.md)
 
 ---
 
@@ -182,7 +195,7 @@
 
 <br/>
 
-[GitHub](https://github.com/TG-Twilight/AWAvenue-Ads-Rule)
+[GitHub](https://github.com/zuohl/AWAvenue-Ads-Rule)
 ·
 [频道](https://t.me/AWAvenueAdsRule)
 ·

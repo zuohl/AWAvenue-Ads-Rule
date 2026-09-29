@@ -76,10 +76,10 @@ For **AdGuard Home / AdGuard / AdGuard DNS** and other tools that support Adbloc
 
 | Mirror | Link |
 |:------:|------|
-| GitHub Raw | [Subscribe](https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt) |
-| Tianming CFCDN | [Subscribe](https://github.boki.moe/https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt) |
-| jsDelivr (gcore) | [Subscribe](https://gcore.jsdelivr.net/gh/TG-Twilight/AWAvenue-Ads-Rule@main/AWAvenue-Ads-Rule.txt) |
-| ghproxy | [Subscribe](https://ghfast.top/https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt) |
+| GitHub Raw | [Subscribe](https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt) |
+| Tianming CFCDN | [Subscribe](https://github.boki.moe/https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt) |
+| jsDelivr (gcore) | [Subscribe](https://gcore.jsdelivr.net/gh/zuohl/AWAvenue-Ads-Rule@main/AWAvenue-Ads-Rule.txt) |
+| ghproxy | [Subscribe](https://ghfast.top/https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt) |
 
 More formats and mirrors → [Official site · Subscription](https://awavenue.top/Sub.html)
 
@@ -89,14 +89,27 @@ Since 1.7.6-release the rules are split into three categories — **Ads / Privac
 
 | Variant | Contents | Best for | AdGuard link |
 |:-------:|----------|----------|:------------:|
-| Full protection | Ads + Privacy + Unwelcome | The default, complete experience | [Subscribe](https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt) |
-| Ads only | Ads | Maximum compatibility, minimal interference | [Subscribe](https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Adguard-Only.Ads.txt) |
-| Ads + Unwelcome | Privacy rules excluded | Keeping analytics and telemetry working | [Subscribe](https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Adguard-No.Privacy.txt) |
-| Ads + Privacy | Unwelcome rules excluded | Keeping updates, push and related connections | [Subscribe](https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Adguard-No.Unwelcome.txt) |
+| Full protection | Ads + Privacy + Unwelcome | The default, complete experience | [Subscribe](https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/AWAvenue-Ads-Rule.txt) |
+| Ads only | Ads | Maximum compatibility, minimal interference | [Subscribe](https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Adguard-Only.Ads.txt) |
+| Ads + Unwelcome | Privacy rules excluded | Keeping analytics and telemetry working | [Subscribe](https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Adguard-No.Privacy.txt) |
+| Ads + Privacy | Unwelcome rules excluded | Keeping updates, push and related connections | [Subscribe](https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Adguard-No.Unwelcome.txt) |
 
 "Unwelcome" covers forced updates, P2P/PCDN, push channels and cloud-control delivery. Blocking them does not change ad filtering, but it may affect those features — hence the separate category.
 
-The table lists AdGuard format only; the same four variants exist for every other tool (Clash, Quantumult X, hosts, Mosdns, …) under [`Filters/`](https://github.com/TG-Twilight/AWAvenue-Ads-Rule/tree/main/Filters), named `AWAvenue-Ads-Rule-<tool>-<variant>.<ext>`. The [subscription generator](https://awavenue.top/Sub.html) builds the right link for you, so there is no need to memorise filenames.
+The table lists AdGuard format only; the same four variants exist for every other tool (Clash, Quantumult X, hosts, Mosdns, …) under [`Filters/`](https://github.com/zuohl/AWAvenue-Ads-Rule/tree/main/Filters), named `AWAvenue-Ads-Rule-<tool>-<variant>.<ext>`. The [subscription generator](https://awavenue.top/Sub.html) builds the right link for you, so there is no need to memorise filenames.
+
+### sing-box SRS subscription (binary rule-sets)
+
+CI automatically pulls the latest rules from upstream `TG-Twilight/AWAvenue-Ads-Rule` and compiles `Filters/*Singbox*.json` into binary `.srs` rule-sets (smaller size, faster loading):
+
+| Variant | SRS subscription |
+|:-------:|------------------|
+| Full protection | https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox.srs |
+| Ads only | https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox-Only.Ads.srs |
+| Ads + Unwelcome | https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox-No.Privacy.srs |
+| Ads + Privacy | https://raw.githubusercontent.com/zuohl/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox-No.Unwelcome.srs |
+
+A `route.rule_set` config example, mirrors and local build steps → [`docs/SingBox-SRS.md`](../docs/SingBox-SRS.md)
 
 ---
 
@@ -182,7 +195,7 @@ This is a personal project, maintained as time allows. Issues and PRs are welcom
 
 <br/>
 
-[GitHub](https://github.com/TG-Twilight/AWAvenue-Ads-Rule)
+[GitHub](https://github.com/zuohl/AWAvenue-Ads-Rule)
 ·
 [Channel](https://t.me/AWAvenueAdsRule)
 ·
